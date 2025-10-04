@@ -33,7 +33,7 @@ export class AuthService {
             throw { message: 'Password is not correct', code: 'PASSWORD_NOT_CORRECT' };
         }
 
-        const { token, expireAt } = await generateToken({ username, userId: userDoc.id });
+        const { token, expireAt } = await generateToken({ username, userId: userDoc.id}, process.env.ACCESS_TOKEN_SECRET );
         return { accessToken: token, userId: userDoc.id, expireAt };
     }
     public async refresh(refreshToken: string) {
