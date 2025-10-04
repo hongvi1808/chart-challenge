@@ -1,5 +1,5 @@
 export interface MetricsModel {
-    id: string
+    id?: string
     pos: number
     eatclub: number
     labourCosts: number

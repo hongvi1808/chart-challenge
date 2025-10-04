@@ -37,12 +37,13 @@ export const sessionSlice = createSlice({
             .addCase(logoutThunk.fulfilled, (state, action) => {
                 state.loading = false;
                 state.loggedIn = false;
+                state.session = emptySession;
                 toast.success('Logout Successfully!')
             })
             .addCase(refreshThunk.fulfilled, (state, action) => {
                 state.loading = false;
                 state.loggedIn = true;
-                state.session = action.payload;
+                state.session = action.payload ;
             })
             .addMatcher(isRejected(loginThunk, registerThunk, logoutThunk),
                 (state, action) => {

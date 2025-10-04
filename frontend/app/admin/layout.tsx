@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Box } from "@mui/material";
+import { Box, Stack, } from "@mui/material";
+import { Sitebar } from "@/components/layouts/sitebar.comp";
 
 
 export const metadata: Metadata = {
@@ -13,8 +14,28 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <Box>
-            {children}
+        <Stack direction={'row'} spacing={2}>
+                <Sitebar />
+             <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                flex: 1,
+                minWidth: 0,
+            }}
+        >
+            <Box
+                component="main"
+                sx={{
+                    flexGrow: 1,
+                    p: 3,
+                    transition: "margin 0.3s",
+                    marginLeft: '240px',
+                }}
+            >
+                {children}
+            </Box>
         </Box>
+        </Stack>
     );
 }

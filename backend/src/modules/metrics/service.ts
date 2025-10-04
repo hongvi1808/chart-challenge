@@ -40,7 +40,7 @@ export class AdminService {
         const res = await models.Metrics.findByIdAndUpdate(id, {
             pos, eatclub, labourCosts, date, impact,
             updatedAt: new Date().getTime()
-        })
+        }, {new: true})
 
         return res;
     }

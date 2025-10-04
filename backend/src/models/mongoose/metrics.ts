@@ -19,7 +19,7 @@ const metricsSchema = new mongoose.Schema(
         eatclub: { type: Number, default: 0, required: true },
         labourCosts: { type: Number, default: 0, required: true  },
         date: { type: Number, required: true},
-        impact: { type: String, default: false },
+        impact: { type: Boolean, default: false },
         createdAt: { type: String, default: new Date().getTime()  },
         updatedAt: { type: String, default: new Date().getTime()  },
         alive: { type: Boolean, default: true },
