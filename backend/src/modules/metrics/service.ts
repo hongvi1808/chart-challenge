@@ -44,7 +44,7 @@ export class AdminService {
 
         return res;
     }
-    public async deleteMetric(id: string) {
+    public async    deleteMetric(id: string) {
         const res = await models.Metrics.findByIdAndUpdate(id, {
             alive: false,
             updatedAt: new Date().getTime()

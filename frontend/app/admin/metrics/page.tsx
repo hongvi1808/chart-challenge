@@ -11,6 +11,8 @@ import { GridPaginationModel } from "@mui/x-data-grid";
 import { GridColDef } from "@mui/x-data-grid";
 import { FloppyDisk, NotePencil, Plus, Trash, X } from "phosphor-react";
 import { useEffect, useState } from "react";
+import dayjs from "dayjs";
+
 
 export default function MetricsPage() {
     const { loading, items, total } = useAppSelector((state: RootState) => state.metrics)
@@ -45,12 +47,11 @@ export default function MetricsPage() {
         }
     }
     const handleOnPageChange = (model: GridPaginationModel) => {
-        console.log('lo', model)
         setPaginationModel({ page: model.page, limit: model.pageSize })
         dispatchAsyn(getMetricsThunk({ page: model.page + 1, limit: model.pageSize }))
     }
-    const handleDelete = async (selectedItem: MetricsModel) => {
-        const result = dispatchAsyn(deleteMetricsThunk(selectedItem.id))
+    const handleDelete = async (id: string) => {
+         dispatchAsyn(deleteMetricsThunk(id))
     }
     const columns: GridColDef[] = [
         { field: 'pos', headerName: 'Pos Revenue', flex: 0.25 },
@@ -61,7 +62,7 @@ export default function MetricsPage() {
                 return <Box>{formatDate(params.row.date)}</Box>
             },
         },
-        { field: 'impact', headerName: 'Impact', flex: 0.25 },
+        // { field: 'impact', headerName: 'Impact', flex: 0.25 },
         {
             field: "action",
             headerName: "", flex: 0.25,
@@ -130,7 +131,12 @@ export default function MetricsPage() {
                         <TextFiledControlBase
                             name='date'
                             label="Date*"
-                            inputProps={{ required: true, defaultValue: item ? formatDateToInput(item?.date) : formatDateToInput(new Date()), type: 'date' }}
+                            inputProps={{ required: true, 
+                                defaultValue: item ? formatDateToInput(item?.date) : formatDateToInput(new Date()), 
+                                type: 'date',
+                                // inputProps: {max: new Date().toISOString().split("T")[0]}
+                                inputProps: {max: dayjs().format("YYYY-MM-DD")}
+                            }}
                             getErrorMessage={validRequire}
                         />
 

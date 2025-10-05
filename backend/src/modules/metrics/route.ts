@@ -47,10 +47,9 @@ router.put('/:id', async (req, res) => {
     }
 });
 router.delete('/:id', async (req, res) => {
-    const { pos, eatclub, labourCosts, date, impact } = req.body;
     const { id } = req.params;
     try {
-        const result = await service.updateMetric({ id, pos, eatclub, labourCosts, date, impact });
+        const result = await service.deleteMetric(id);
         successResponse(res, result);
     } catch (error) {
         errorResponse(res, error);
