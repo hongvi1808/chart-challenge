@@ -1,9 +1,9 @@
 'use client'
 
-import { useAppDispatch } from "@/base/store";
+import { RootState, useAppDispatch, useAppSelector } from "@/base/store";
 import { logoutThunk } from "@/base/store/thunks/auth.thunk";
 import { Avatar, Divider, Drawer, Icon, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, Typography, } from "@mui/material"
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FlagCheckered, SignOut } from "phosphor-react";
 
 const menus: MenuType[] = [
@@ -16,6 +16,8 @@ export interface SitebarProps {
 }
 export function Sitebar(props: SitebarProps) {
     const router = useRouter()
+    const pathname = usePathname();
+    const {session} = useAppSelector((root: RootState) => root.auth)
     const dispatchAsyn = useAppDispatch()
     const logout = async () => {
         const result = await dispatchAsyn(logoutThunk())
@@ -31,8 +33,8 @@ export function Sitebar(props: SitebarProps) {
             <Stack padding={1} spacing={1} alignItems={'center'}>
                 <Avatar sizes='small' >A</Avatar>
                 <Stack >
-                    <Typography variant='body1'>{'Hi, Admin'}</Typography>
-                    <Typography variant='caption' color='textSecondary'>{''}</Typography>
+                    <Typography variant='body1'>{'Hello, Admin'}</Typography>
+                    <Typography variant='caption' color='textSecondary'>{`username: ${session.username}`}</Typography>
                 </Stack>
 
             </Stack>
@@ -40,7 +42,7 @@ export function Sitebar(props: SitebarProps) {
             {menus?.map((item, index) => (
                 <ListItem key={index} disablePadding sx={{ display: "block" }}>
                     <ListItemButton
-                        selected={true}
+                        selected={item.href === pathname}
                         sx={{
                             minWidth: 240,
                             display: "flex",

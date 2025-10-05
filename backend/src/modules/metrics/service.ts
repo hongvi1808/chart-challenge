@@ -15,7 +15,7 @@ export class AdminService {
         const metricDoc = await models.Metrics.find({ alive: true, date: { $gte: fromDate, $lte: toDate } })
         const metricPreviousDoc = await models.Metrics.find({ alive: true, date: { $gte: previousDate, $lte: fromDate } })
        
-        return {curMetric: metricDoc, preMectric: metricPreviousDoc};
+        return {curMetric: metricDoc, preMetric: metricPreviousDoc};
     }
     public async createMetrics({ pos, eatclub, labourCosts, date, impact }: {
         pos: number, eatclub: number, labourCosts: number, date: number, impact: boolean,

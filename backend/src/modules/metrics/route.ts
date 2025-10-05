@@ -6,7 +6,7 @@ import { errorResponse, successResponse } from "../../models/common/response";
 
 const router = Router();
 const service = Container.get(AdminService);
-router.post('/compare', async (req, res) => {
+router.get('/compare', async (req, res) => {
     const { fromDate, toDate, previousDate } = req.query;
     try {
         const result = await service.compareMetricByDate({

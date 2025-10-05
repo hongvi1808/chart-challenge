@@ -8,7 +8,9 @@ export default function Admin() {
     const router = useRouter()
 
     const { loading, loggedIn } = useAppSelector((state: RootState) => state.auth)
-    useEffect(() => { if (!loggedIn) router.replace('/login') }, [loggedIn])
+    useEffect(() => { if (!loggedIn) router.replace('/login')
+        else router.replace('/admin/metrics')
+     }, [loggedIn])
 
     return (
         <Stack>

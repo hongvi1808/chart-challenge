@@ -41,7 +41,7 @@ router.post('/refresh', async (req, res) => {
         errorResponse(res, error);
     }
 });
-router.post('/logout', async (req, res) => {
+router.get('/logout', async (req, res) => {
     try {
         res.clearCookie("refreshToken", {
             httpOnly: true,

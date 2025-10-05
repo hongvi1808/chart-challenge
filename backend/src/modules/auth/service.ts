@@ -34,7 +34,7 @@ export class AuthService {
         }
 
         const { token, expireAt } = await generateToken({ username, userId: userDoc.id}, process.env.ACCESS_TOKEN_SECRET );
-        return { accessToken: token, userId: userDoc.id, expireAt };
+        return { accessToken: token, username: userDoc.username, userId: userDoc.id, expireAt };
     }
     public async refresh(refreshToken: string) {
         if (!refreshToken) throw { code: 'UNAUTHEN', message: 'Refresh token is existed' }
@@ -42,6 +42,6 @@ export class AuthService {
         if (!payload.username || !payload.userId) throw { code: 'UNAUTHEN', message: 'Refresh token is error' }
 
         const { token, expireAt } = await generateToken({ username: payload.username, userId: payload.userId });
-        return { accessToken: token, userId: payload.userId, expireAt };
+        return { accessToken: token,  username: payload.username, userId: payload.userId, expireAt };
     }
 }

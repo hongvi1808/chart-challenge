@@ -9,18 +9,18 @@ import TableBase from "@/components/table/table-base.comp";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Stack, Typography } from "@mui/material"
 import { GridPaginationModel } from "@mui/x-data-grid";
 import { GridColDef } from "@mui/x-data-grid";
-import { FloppyDisk, NotePencil, Pencil, Plus, Trash, TrashSimple, X } from "phosphor-react";
+import { FloppyDisk, NotePencil, Plus, Trash, X } from "phosphor-react";
 import { useEffect, useState } from "react";
 
 export default function MetricsPage() {
-    const { loading, items } = useAppSelector((state: RootState) => state.metrics)
+    const { loading, items, total } = useAppSelector((state: RootState) => state.metrics)
     const dispatchAsyn = useAppDispatch()
     const [openDiag, setOpenDiag] = useState(false);
     const [item, setItem] = useState<MetricsModel | null>(null);
-    const [paginationModel, setPaginationModel] = useState<ListParams>({ page: 1, limit: 10 })
+    const [paginationModel, setPaginationModel] = useState<ListParams>({ page: 0, limit: 5 })
 
     useEffect(() => {
-        dispatchAsyn(getMetricsThunk({ page: 1, limit: 10 }))
+        dispatchAsyn(getMetricsThunk({ page: 1, limit: 5 }))
     }, [])
 
     const onToggleDiaglog = (selectedItem: MetricsModel | null) => {
@@ -45,6 +45,7 @@ export default function MetricsPage() {
         }
     }
     const handleOnPageChange = (model: GridPaginationModel) => {
+        console.log('lo', model)
         setPaginationModel({ page: model.page, limit: model.pageSize })
         dispatchAsyn(getMetricsThunk({ page: model.page + 1, limit: model.pageSize }))
     }
@@ -72,7 +73,7 @@ export default function MetricsPage() {
                         <NotePencil size={24} weight="fill" />
                     </IconButton>
                     <IconButton
-                        color="error" size="medium" 
+                        color="error" size="medium"
                         onClick={() => handleDelete(params.row.id)} >
                         <Trash size={24} weight="fill" />
                     </IconButton>
@@ -93,7 +94,8 @@ export default function MetricsPage() {
                 </Stack>
             </Stack>
 
-            <TableBase
+            <TableBase paginationMode="server"
+                rowCount={total || 0}
                 loading={loading} rows={items} columns={columns}
                 onPaginationModelChange={handleOnPageChange}
                 paginationModel={{ page: paginationModel.page, pageSize: paginationModel.limit }}

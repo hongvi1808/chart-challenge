@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 export interface AuthState {
     loading: boolean,
     items: MetricsModel[] | undefined;
+    compare: {curMetric: MetricsModel[], preMetric: MetricsModel[]};
     total: number;
     page: number;
     limit: number;
@@ -15,6 +16,7 @@ export interface AuthState {
 const initialState: AuthState = {
     loading: false,
     items: [],
+    compare: {curMetric: [], preMetric: []},
     total: 0,
     page: 0,
     limit: 0,
@@ -41,7 +43,8 @@ export const metricsSlice = createSlice({
                 })
                 .addCase(getMetricsByDateThunk.fulfilled, (state, action) => {
                     state.loading = false;
-                    state.items= action.payload
+                    state.compare.curMetric= action.payload.curMetric || []
+                    state.compare.preMetric= action.payload.preMetric || []
                 })
                 .addCase(createMetricsThunk.fulfilled, (state, action) => {
                     state.loading = false;
