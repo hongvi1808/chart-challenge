@@ -2,7 +2,7 @@
 
 ## Feature
 - Login, register
-- CRUD metrics
+- CRUD metrics, pagination
 - View chart
 
 ## Backend: backend
@@ -11,7 +11,7 @@
 - Expressjs, jwt, mongodb, mongoose, typdi
 
 
-# Frontend: frontend
+## Frontend: frontend
 1. ### How to run?: See that in README.md file of frontend folder
 2. ### Techstack:
 - Nextjs, MUI, Redux toolkit, recharts, axios, Phosphor icon
